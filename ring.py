@@ -5,11 +5,11 @@ from wave_attenuation import WaveAttenuationPOEnvWithDelay
 from flow.networks import RingNetwork
 
 # time horizon of a single rollout
-HORIZON = 3000
+HORIZON = 6000
 # number of rollouts per training iteration
-N_ROLLOUTS = 10
+N_ROLLOUTS = 20
 # number of parallel workers
-N_CPUS = 11
+N_CPUS = 35
 
 # We place one autonomous vehicle and 22 human-driven vehicles in the network
 vehicles = VehicleParams()
