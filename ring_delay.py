@@ -3,13 +3,16 @@ from flow.core.params import VehicleParams, SumoCarFollowingParams
 from flow.controllers import RLController, IDMController, ContinuousRouter
 from wave_attenuation import WaveAttenuationPOEnvWithDelay
 from flow.networks import RingNetwork
+import os
 
 # time horizon of a single rollout
 HORIZON = 3000
 # number of rollouts per training iteration
-N_ROLLOUTS = 40
+N_ROLLOUTS = 20
 # number of parallel workers
-N_CPUS = 35
+N_CPUS = 38
+
+delay = float(os.environ['DELAY'])
 
 # We place one autonomous vehicle and 22 human-driven vehicles in the network
 vehicles = VehicleParams()
@@ -31,7 +34,7 @@ vehicles.add(
 
 flow_params = dict(
     # name of the experiment
-    exp_tag="stabilizing_the_ring_delay",
+    exp_tag=f"stabilizing_the_ring_delay_{delay}",
     env_name=WaveAttenuationPOEnvWithDelay,
     network=RingNetwork,
     simulator='traci',
@@ -50,7 +53,7 @@ flow_params = dict(
             "max_accel": 1,
             "max_decel": 1,
             "ring_length": [220, 270],
-            "observation_delay": 5.0,
+            "observation_delay": delay,
         },
     ),
     net=NetParams(

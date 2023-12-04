@@ -3,6 +3,8 @@ import argparse
 import json
 import os
 import sys
+sys.path.pop()
+sys.path.append('/common/cseos2g/papapalpi/code/flow')
 from time import strftime
 from copy import deepcopy
 
@@ -23,10 +25,7 @@ def parse_args(args):
              'exp_configs/rl/singleagent or exp_configs/rl/multiagent.')
 
     parser.add_argument(
-        '--num_cpus', type=int, default=1,
-        help='How many CPUs to use')
-    parser.add_argument(
-        '--num_steps', type=int, default=1000,
+        '--num_steps', type=int, default=5000,
         help='How many total steps to perform learning over')
     parser.add_argument(
         '--rollout_size', type=int, default=1000,
@@ -57,9 +56,10 @@ def setup_exps_rllib(flow_params,
     config["num_workers"] = n_cpus
     config["train_batch_size"] = horizon * n_rollouts
     config["gamma"] = 0.999  # discount rate
-    config["model"].update({"fcnet_hiddens": [32, 32, 32]})
+    config["model"].update({"fcnet_hiddens": [32, 32, 32], "use_lstm": False})
     config["use_gae"] = True
     config["lambda"] = 0.97
+    config["lr"] = 5e-7
     config["kl_target"] = 0.02
     config["num_sgd_iter"] = 10
     config["horizon"] = horizon

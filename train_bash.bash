@@ -1,0 +1,2 @@
+#!/bin/bash
+PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python PYTHONPATH=$COMMON/code/flow/:$PYTHONPATH python3 train.py $1
