@@ -49,7 +49,9 @@ def visualizer_pisaturation(args):
 
     if args.render_mode == 'sumo_gui':
         env.sim_params.render = True  # set to True after initializing agent and env
-
+        if args.save_render:
+            env.sim_params.save_render = True
+            env.path = "/home/alex/flow_video_pisaturation_5_delay"
     # if restart_instance, don't restart here because env.reset will restart later
     if not sim_params.restart_instance:
         env.restart_simulation(sim_params=sim_params, render=sim_params.render)

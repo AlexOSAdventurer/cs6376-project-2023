@@ -28,7 +28,7 @@ example usage:
 Here the arguments are:
 1 - the path to the simulation results
 2 - the number of the checkpoint
-"""flow/flow/visualize/test_rllib.py
+"""
 
 def visualizer_rllib(args):
     """Visualizer for RLlib experiments.
@@ -92,7 +92,9 @@ def visualizer_rllib(args):
 
     if args.render_mode == 'sumo_gui':
         env.sim_params.render = True  # set to True after initializing agent and env
-
+        if args.save_render:
+            env.sim_params.save_render = True
+            env.path = "/home/alex/flow_video_rl_4_delay"
     # if restart_instance, don't restart here because env.reset will restart later
     if not sim_params.restart_instance:
         env.restart_simulation(sim_params=sim_params, render=sim_params.render)
