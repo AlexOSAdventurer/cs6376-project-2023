@@ -101,6 +101,7 @@ def visualizer_rllib(args):
 
     # Simulate and collect metrics
     vel = []
+    monitor_state = []
     state = env.reset()
     ret = 0
     for _ in range(env_params.horizon):
@@ -114,10 +115,13 @@ def visualizer_rllib(args):
         action = agent.compute_action(state)
         state, reward, done, _ = env.step(action)
         ret += reward
+        monitor_state.append(env.evaluate_safety())
         if done:
             break
     mean_speed = np.mean(vel)
     std_speed = np.std(vel)
+
+    percentage_safety = np.mean(monitor_state)
 
     print('==== Summary of results ====')
     print("Return:")
@@ -126,7 +130,9 @@ def visualizer_rllib(args):
     print(f"\nSpeed, mean (m/s):{mean_speed}")
     print(f"\nSpeed, std (m/s):{std_speed}")
 
-    result = [ret, mean_speed, std_speed]
+    print(f"\nPercentage safety:{percentage_safety}")
+
+    result = [ret, mean_speed, std_speed, percentage_safety]
     # terminate the environment
     env.unwrapped.terminate()
     return result
