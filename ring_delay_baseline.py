@@ -32,7 +32,7 @@ def generateConfig(delay):
 
     flow_params = dict(
         # name of the experiment
-        exp_tag=f"stabilizing_the_ring_pi_delay_{delay}",
+        exp_tag=f"stabilizing_the_ring_baseline_{delay}",
         env_name=WaveAttenuationPOEnvWithDelay,
         network=RingNetwork,
         simulator='traci',
